@@ -35,86 +35,86 @@ Row {
             id: pfp
 
             anchors.fill: parent
-            path: `${Paths.home}/.face`
+            path: Quickshell.env("CAELESTIA_PFP_PATH") || `${Paths.home}/.face`
         }
 
-        MouseArea {
-            anchors.fill: parent
+        // MouseArea {
+        //     anchors.fill: parent
 
-            cursorShape: Qt.PointingHandCursor
-            hoverEnabled: true
+        //     cursorShape: Qt.PointingHandCursor
+        //     hoverEnabled: true
 
-            onClicked: {
-                root.visibilities.launcher = false;
-                dialog.open();
-            }
+        //     onClicked: {
+        //         root.visibilities.launcher = false;
+        //         dialog.open();
+        //     }
 
-            StyledRect {
-                anchors.fill: parent
+        //     StyledRect {
+        //         anchors.fill: parent
 
-                color: Qt.alpha(Colours.palette.m3primary, 0.1)
-                opacity: parent.containsMouse ? 1 : 0
+        //         color: Qt.alpha(Colours.palette.m3primary, 0.1)
+        //         opacity: parent.containsMouse ? 1 : 0
 
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: Appearance.anim.durations.normal
-                        easing.type: Easing.BezierSpline
-                        easing.bezierCurve: Appearance.anim.curves.standard
-                    }
-                }
-            }
+        //         Behavior on opacity {
+        //             NumberAnimation {
+        //                 duration: Appearance.anim.durations.normal
+        //                 easing.type: Easing.BezierSpline
+        //                 easing.bezierCurve: Appearance.anim.curves.standard
+        //             }
+        //         }
+        //     }
 
-            StyledRect {
-                anchors.centerIn: parent
+        //     StyledRect {
+        //         anchors.centerIn: parent
 
-                implicitWidth: selectIcon.implicitHeight + Appearance.padding.small * 2
-                implicitHeight: selectIcon.implicitHeight + Appearance.padding.small * 2
+        //         implicitWidth: selectIcon.implicitHeight + Appearance.padding.small * 2
+        //         implicitHeight: selectIcon.implicitHeight + Appearance.padding.small * 2
 
-                radius: Appearance.rounding.normal
-                color: Colours.palette.m3primary
-                scale: parent.containsMouse ? 1 : 0.5
-                opacity: parent.containsMouse ? 1 : 0
+        //         radius: Appearance.rounding.normal
+        //         color: Colours.palette.m3primary
+        //         scale: parent.containsMouse ? 1 : 0.5
+        //         opacity: parent.containsMouse ? 1 : 0
 
-                MaterialIcon {
-                    id: selectIcon
+        //         MaterialIcon {
+        //             id: selectIcon
 
-                    anchors.centerIn: parent
-                    anchors.horizontalCenterOffset: -font.pointSize * 0.02
+        //             anchors.centerIn: parent
+        //             anchors.horizontalCenterOffset: -font.pointSize * 0.02
 
-                    text: "frame_person"
-                    color: Colours.palette.m3onPrimary
-                    font.pointSize: Appearance.font.size.extraLarge
-                }
+        //             text: "frame_person"
+        //             color: Colours.palette.m3onPrimary
+        //             font.pointSize: Appearance.font.size.extraLarge
+        //         }
 
-                Behavior on scale {
-                    NumberAnimation {
-                        duration: Appearance.anim.durations.expressiveFastSpatial
-                        easing.type: Easing.BezierSpline
-                        easing.bezierCurve: Appearance.anim.curves.expressiveFastSpatial
-                    }
-                }
+        //         Behavior on scale {
+        //             NumberAnimation {
+        //                 duration: Appearance.anim.durations.expressiveFastSpatial
+        //                 easing.type: Easing.BezierSpline
+        //                 easing.bezierCurve: Appearance.anim.curves.expressiveFastSpatial
+        //             }
+        //         }
 
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: Appearance.anim.durations.expressiveFastSpatial
-                        easing.type: Easing.BezierSpline
-                        easing.bezierCurve: Appearance.anim.curves.expressiveFastSpatial
-                    }
-                }
-            }
-        }
+        //         Behavior on opacity {
+        //             NumberAnimation {
+        //                 duration: Appearance.anim.durations.expressiveFastSpatial
+        //                 easing.type: Easing.BezierSpline
+        //                 easing.bezierCurve: Appearance.anim.curves.expressiveFastSpatial
+        //             }
+        //         }
+        //     }
+        // }
 
-        FileDialog {
-            id: dialog
+        // FileDialog {
+        //     id: dialog
 
-            nameFilters: [`Image files (${Wallpapers.extensions.map(e => `*.${e}`).join(" ")})`]
+        //     nameFilters: [`Image files (${Wallpapers.extensions.map(e => `*.${e}`).join(" ")})`]
 
-            onAccepted: {
-                Paths.copy(selectedFile, `${Paths.home}/.face`);
-                pfp.pathChanged();
-                Quickshell.execDetached(["notify-send", "-a", "caelestia-shell", "-u", "low", "Profile picture changed", `Profile picture changed to ${Paths.strip(selectedFile)}`]);
-            }
-        }
+        //     onAccepted: {
+        //         Paths.copy(selectedFile, `${Paths.home}/.face`);
+        //         pfp.pathChanged();
+        //         Quickshell.execDetached(["notify-send", "-a", "caelestia-shell", "-u", "low", "Profile picture changed", `Profile picture changed to ${Paths.strip(selectedFile)}`]);
+        //     }
+        // }
     }
 
     Column {
