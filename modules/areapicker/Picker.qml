@@ -12,6 +12,8 @@ import QtQuick.Effects
 MouseArea {
     id: root
 
+    property string screenshotDir: Quickshell.env("CAELESTIA_SCREENSHOT_DIR");
+
     required property LazyLoader loader
     required property ShellScreen screen
 
@@ -88,7 +90,28 @@ MouseArea {
         if (closeAnim.running)
             return;
 
-        Quickshell.execDetached(["sh", "-c", `grim -l 0 -g '${screen.x + Math.ceil(rsx)},${screen.y + Math.ceil(rsy)} ${Math.floor(sw)}x${Math.floor(sh)}' - | swappy -f -`]);
+        if (!screenshotDir)
+        {
+          Quickshell.execDetached(["notify-send", "-a", "caelestia-shell", "-u", "low", "Screenshot", "Invalid path. Saving to /tmp"]);
+        }
+
+        Quickshell.execDetached([
+          "bash",
+          "-c",
+          `
+            output_dir="${screenshotDir}"
+            if [[ -z "$output_dir" ]]; then
+              output_dir="/tmp"
+            fi
+
+            filename="$(date '+%Y-%m-%dT%H-%M-%S').png"
+            output_path="$output_dir/$filename"
+
+            grim -l 0 -g '${screen.x + Math.ceil(rsx)},${screen.y + Math.ceil(rsy)} ${Math.floor(sw)}x${Math.floor(sh)}' - \
+              | swappy -f - -o "$output_path" \
+              && wl-copy < "$output_path"
+          `
+        ]);
         closeAnim.start();
     }
 
