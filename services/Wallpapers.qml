@@ -17,7 +17,7 @@ Singleton {
     property bool showPreview: false
     readonly property string current: showPreview ? previewPath : actualCurrent
     property string previewPath
-    property string actualCurrent
+    property string actualCurrent: Quickshell.env("CAELESTIA_WALLPAPER_PATH")
     property bool previewColourLock
 
     readonly property list<var> preppedWalls: list.map(w => ({
@@ -71,15 +71,15 @@ Singleton {
         }
     }
 
-    FileView {
-        path: root.currentNamePath
-        watchChanges: true
-        onFileChanged: reload()
-        onLoaded: {
-            root.actualCurrent = text().trim();
-            root.previewColourLock = false;
-        }
-    }
+    // FileView {
+    //     path: root.currentNamePath
+    //     watchChanges: true
+    //     onFileChanged: reload()
+    //     onLoaded: {
+    //         root.actualCurrent = text().trim();
+    //         root.previewColourLock = false;
+    //     }
+    // }
 
     Process {
         id: getPreviewColoursProc
