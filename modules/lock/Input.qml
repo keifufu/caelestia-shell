@@ -43,7 +43,7 @@ ColumnLayout {
 
             CachingImage {
                 anchors.fill: parent
-                path: `${Paths.home}/.face`
+                path: Quickshell.env("CAELESTIA_PFP_PATH") || `${Paths.home}/.face`
             }
         }
 
