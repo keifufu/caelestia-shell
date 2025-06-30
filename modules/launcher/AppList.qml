@@ -20,6 +20,8 @@ ListView {
 
     function getModelValues() {
         let text = search.text;
+        if (Wofi.isOpen)
+          return Wofi.fuzzyQuery(text);
         if (isCalc)
             return [0];
         if (isScheme)
@@ -52,6 +54,8 @@ ListView {
     }
 
     delegate: {
+        if (Wofi.isOpen)
+          return wofiItem;
         if (isCalc)
             return calcItem;
         if (isScheme)
@@ -125,6 +129,14 @@ ListView {
 
         ActionItem {
             list: root
+        }
+    }
+
+    Component {
+        id: wofiItem
+
+        WofiItem {
+            visibilities: root.visibilities
         }
     }
 

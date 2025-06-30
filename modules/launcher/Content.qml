@@ -80,7 +80,10 @@ Item {
             onAccepted: {
                 const currentItem = list.currentList?.currentItem;
                 if (currentItem) {
-                    if (list.showWallpapers) {
+                    if (Wofi.isOpen) {
+                      Wofi.exec(currentItem.modelData);
+                      root.visibilities.launcher = false;
+                    } else if (list.showWallpapers) {
                         if (Colours.scheme === "dynamic" && currentItem.modelData.path !== Wallpapers.actualCurrent)
                             Wallpapers.previewColourLock = true;
                         Wallpapers.setWallpaper(currentItem.modelData.path);

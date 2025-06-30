@@ -9,15 +9,6 @@ Scope {
     property bool launcherInterrupted
 
     CustomShortcut {
-        name: "showall"
-        description: "Toggle launcher, dashboard and osd"
-        onPressed: {
-            const v = Visibilities.getForActive();
-            v.launcher = v.dashboard = v.osd = !(v.launcher || v.dashboard || v.osd);
-        }
-    }
-
-    CustomShortcut {
         name: "session"
         description: "Toggle session menu"
         onPressed: {
@@ -60,6 +51,23 @@ Scope {
         function list(): string {
             const visibilities = Visibilities.getForActive();
             return Object.keys(visibilities).filter(k => typeof visibilities[k] === "boolean").join("\n");
+        }
+    }
+
+    IpcHandler {
+        target: "wofi"
+
+        function toggle(values: string, names: string, icon: string, command: string): void {
+            const visibilities = Visibilities.getForActive();
+            const split_names = names.split("@SEP@");
+            Wofi.options = values.split("@SEP@").map((v, i) => ({
+              value: v,
+              name: split_names[i],
+            }));
+            Wofi.icon = icon;
+            Wofi.command = command;
+            Wofi.isOpen = true;
+            visibilities.launcher = !visibilities.launcher;
         }
     }
 }
