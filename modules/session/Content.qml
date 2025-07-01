@@ -11,6 +11,7 @@ Column {
     id: root
 
     required property PersistentProperties visibilities
+    property string confirmed: ""
 
     padding: Appearance.padding.large
 
@@ -95,9 +96,23 @@ Column {
         radius: Appearance.rounding.large
         color: button.activeFocus ? Colours.palette.m3secondaryContainer : Colours.palette.m3surfaceContainer
 
-        Keys.onEnterPressed: Quickshell.execDetached(button.command)
-        Keys.onReturnPressed: Quickshell.execDetached(button.command)
-        Keys.onEscapePressed: root.visibilities.session = false
+        Keys.onEnterPressed: execute(button.command)
+        Keys.onReturnPressed: execute(button.command)
+        Keys.onEscapePressed: close()
+
+        function execute(command: list<string>) {
+          if (confirmed == command[0]) {
+            confirmed = "";
+            Quickshell.execDetached(command);
+          } else {
+            confirmed = command[0];
+          }
+        }
+
+        function close() {
+          root.visibilities.session = false
+          confirmed = "";
+        }
 
         StateLayer {
             radius: parent.radius
