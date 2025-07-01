@@ -100,7 +100,7 @@ Singleton {
                 list.visibilities.launcher = false;
                 Quickshell.execDetached(["systemctl", "reboot"]);
             }
-        }
+        },
         // Action {
         //     name: qsTr("Logout")
         //     desc: qsTr("Log out of the current session")
@@ -112,16 +112,16 @@ Singleton {
         //         Quickshell.execDetached(["loginctl", "terminate-user", ""]);
         //     }
         // },
-        // Action {
-        //     name: qsTr("Lock")
-        //     desc: qsTr("Lock the current session")
-        //     icon: "lock"
+        Action {
+            name: qsTr("Lock")
+            desc: qsTr("Lock the current session")
+            icon: "lock"
 
-        //     function onClicked(list: AppList): void {
-        //         list.visibilities.launcher = false;
-        //         Quickshell.execDetached(["loginctl", "lock-session"]);
-        //     }
-        // },
+            function onClicked(list: AppList): void {
+                list.visibilities.launcher = false;
+                Quickshell.execDetached(["caelestia", "shell", "lock", "lock"]);
+            }
+        }
         // Action {
         //     name: qsTr("Sleep")
         //     desc: qsTr("Suspend then hibernate")
