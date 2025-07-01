@@ -1,7 +1,7 @@
 import Quickshell.Io
 
 JsonObject {
-    property bool expire: true
+    property bool expire: false
     property int defaultExpireTimeout: 5000
     property real clearThreshold: 0.3
     property int expandThreshold: 20
