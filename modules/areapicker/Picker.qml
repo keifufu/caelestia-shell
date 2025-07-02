@@ -207,11 +207,18 @@ MouseArea {
     }
 
     StyledRect {
-        id: background
-
         anchors.fill: parent
         color: Colours.palette.m3secondaryContainer
-        visible: false
+        opacity: 0.3
+
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            maskSource: selectionWrapper
+            maskEnabled: true
+            maskInverted: true
+            maskSpreadAtMin: 1
+            maskThresholdMin: 0.5
+        }
     }
 
     Item {
@@ -230,17 +237,6 @@ MouseArea {
             implicitWidth: root.sw
             implicitHeight: root.sh
         }
-    }
-
-    MultiEffect {
-        anchors.fill: parent
-        source: background
-        maskSource: selectionWrapper
-        maskEnabled: true
-        maskInverted: true
-        maskSpreadAtMin: 1
-        maskThresholdMin: 0.5
-        opacity: 0.3
     }
 
     Rectangle {
