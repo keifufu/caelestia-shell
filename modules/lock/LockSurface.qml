@@ -39,11 +39,11 @@ WlSessionLockSurface {
         }
     }
 
-    ScreencopyView {
+    CachingImage {
         id: background
+        path: Wallpapers.current
 
         anchors.fill: parent
-        captureSource: root.screen
 
         layer.enabled: true
         layer.effect: MultiEffect {
