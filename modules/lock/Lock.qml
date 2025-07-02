@@ -27,6 +27,20 @@ Scope {
         }
     }
 
+    function uptime(seconds: int) {
+      if (seconds < 90 && !loader.actuvactive) loader.activeAsync = true;
+    }
+
+    Process {
+        id: uptimeProc
+
+        running: true
+        command: ["sh", "-c", "cut -d. -f1 /proc/uptime"]
+        stdout: StdioCollector {
+            onStreamFinished: uptime(parseInt(text))
+        }
+    }
+
     CustomShortcut {
         name: "lock"
         description: "Lock the current session"
