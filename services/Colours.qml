@@ -58,7 +58,7 @@ Singleton {
     }
 
     FileView {
-        path: `${Paths.state}/scheme.json`
+        path: Quickshell.env("CAELESTIA_SCHEME_PATH") || `${Paths.state}/scheme.json`
         watchChanges: true
         onFileChanged: reload()
         onLoaded: root.load(text(), false)
