@@ -1,13 +1,15 @@
-import "root:/widgets"
-import "root:/services"
-import "root:/config"
+import qs.widgets
+import qs.services
+import qs.config
 import "dash"
+import Quickshell
 import QtQuick.Layouts
 
 GridLayout {
     id: root
 
-    required property var visibilities
+    required property PersistentProperties visibilities
+    required property PersistentProperties state
 
     rowSpacing: Appearance.spacing.normal
     columnSpacing: Appearance.spacing.normal
@@ -22,6 +24,7 @@ GridLayout {
             id: user
 
             visibilities: root.visibilities
+            state: root.state
         }
     }
 

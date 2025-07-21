@@ -1,9 +1,10 @@
-import "root:/widgets"
-import "root:/services"
-import "root:/config"
-import "root:/utils"
+import qs.widgets
+import qs.services
+import qs.config
+import qs.utils
 import Quickshell
 import Quickshell.Widgets
+import Quickshell.Bluetooth
 import Quickshell.Services.UPower
 import QtQuick
 import QtQuick.Layouts
@@ -28,6 +29,12 @@ WrapperItem {
     margin: Appearance.padding.large * 2
     rightMargin: 0
     topMargin: 0
+
+    Timer {
+        running: true
+        interval: 10
+        onTriggered: notifs.countChanged()
+    }
 
     Behavior on implicitWidth {
         Anim {
@@ -94,7 +101,7 @@ WrapperItem {
                 Layout.alignment: Qt.AlignVCenter
 
                 animate: true
-                text: Bluetooth.powered ? "bluetooth" : "bluetooth_disabled"
+                text: Bluetooth.defaultAdapter.enabled ? "bluetooth" : "bluetooth_disabled"
                 font.pointSize: Appearance.font.size.large
             }
 
@@ -105,7 +112,7 @@ WrapperItem {
 
                 sourceComponent: StyledText {
                     animate: true
-                    text: qsTr("%n device(s) connected", "", Bluetooth.devices.filter(d => d.connected).length)
+                    text: qsTr("%n device(s) connected", "", Bluetooth.devices.values.filter(d => d.connected).length)
                     font.pointSize: Appearance.font.size.normal
                 }
             }
@@ -201,42 +208,22 @@ WrapperItem {
             move: Transition {
                 Anim {
                     property: "y"
+                    duration: Appearance.anim.durations.large
+                    easing.bezierCurve: Appearance.anim.curves.emphasized
                 }
             }
 
             displaced: Transition {
                 Anim {
                     property: "y"
+                    duration: Appearance.anim.durations.large
+                    easing.bezierCurve: Appearance.anim.curves.emphasized
                 }
             }
 
-            StyledRect {
+            ExtraIndicator {
                 anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                anchors.margins: Appearance.padding.normal
-
-                color: Colours.palette.m3tertiaryContainer
-                radius: Appearance.rounding.small
-
-                implicitWidth: count.implicitWidth + Appearance.padding.normal * 2
-                implicitHeight: count.implicitHeight + Appearance.padding.small * 2
-
-                scale: Notifs.popups.length > Config.lock.maxNotifs ? 1 : 0
-
-                StyledText {
-                    id: count
-
-                    anchors.centerIn: parent
-                    text: qsTr("+%1").arg(Notifs.popups.length - Config.lock.maxNotifs)
-                    color: Colours.palette.m3onTertiaryContainer
-                }
-
-                Behavior on scale {
-                    Anim {
-                        duration: Appearance.anim.durations.expressiveFastSpatial
-                        easing.bezierCurve: Appearance.anim.curves.expressiveFastSpatial
-                    }
-                }
+                extra: Notifs.list.length - Config.lock.maxNotifs
             }
         }
     }

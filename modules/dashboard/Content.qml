@@ -1,8 +1,8 @@
 pragma ComponentBehavior: Bound
 
-import "root:/widgets"
-import "root:/services"
-import "root:/config"
+import qs.widgets
+import qs.services
+import qs.config
 import Quickshell
 import Quickshell.Widgets
 import QtQuick
@@ -87,6 +87,7 @@ Item {
                 Pane {
                     sourceComponent: Dash {
                         visibilities: root.visibilities
+                        state: root.state
                     }
                 }
 

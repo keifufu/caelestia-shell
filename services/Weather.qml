@@ -1,7 +1,7 @@
 pragma Singleton
 
-import "root:/config"
-import "root:/utils"
+import qs.config
+import qs.utils
 import Quickshell
 import QtQuick
 
@@ -11,11 +11,12 @@ Singleton {
     property string loc
     property string icon
     property string description
-    property real temperature
+    property string tempC: "0°C"
+    property string tempF: "0°F"
 
     function reload(): void {
-        if (Config.dashboard.weatherLocation)
-            loc = Config.dashboard.weatherLocation;
+        if (Config.services.weatherLocation)
+            loc = Config.services.weatherLocation;
         else if (!loc || timer.elapsed() > 900)
             Requests.get("https://ipinfo.io/json", text => {
                 loc = JSON.parse(text).loc ?? "";
@@ -27,7 +28,8 @@ Singleton {
         const json = JSON.parse(text).current_condition[0];
         icon = Icons.getWeatherIcon(json.weatherCode);
         description = json.weatherDesc[0].value;
-        temperature = parseFloat(json.temp_C);
+        tempC = `${parseFloat(json.temp_C)}°C`;
+        tempF = `${parseFloat(json.temp_F)}°F`;
     })
 
     Component.onCompleted: reload()

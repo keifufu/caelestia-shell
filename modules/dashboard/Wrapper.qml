@@ -1,8 +1,11 @@
 pragma ComponentBehavior: Bound
 
-import QtQuick
+import qs.widgets.filedialog
+import qs.services
+import qs.config
+import qs.utils
 import Quickshell
-import "root:/config"
+import QtQuick
 
 Item {
     id: root
@@ -10,6 +13,16 @@ Item {
     required property PersistentProperties visibilities
     readonly property PersistentProperties state: PersistentProperties {
         property int currentTab
+
+        readonly property FileDialog facePicker: FileDialog {
+            title: qsTr("Select a profile picture")
+            filterLabel: qsTr("Image files")
+            filters: Wallpapers.extensions
+            onAccepted: path => {
+                Paths.copy(path, `${Paths.home}/.face`);
+                Quickshell.execDetached(["notify-send", "-a", "caelestia-shell", "-u", "low", "-h", `STRING:image-path:${path}`, "Profile picture changed", `Profile picture changed to ${Paths.shortenHome(path)}`]);
+            }
+        }
     }
 
     visible: height > 0

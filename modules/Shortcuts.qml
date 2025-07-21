@@ -1,5 +1,5 @@
-import "root:/widgets"
-import "root:/services"
+import qs.widgets
+import qs.services
 import Quickshell
 import Quickshell.Io
 
@@ -9,11 +9,11 @@ Scope {
     property bool launcherInterrupted
 
     CustomShortcut {
-        name: "session"
-        description: "Toggle session menu"
+        name: "showall"
+        description: "Toggle launcher, dashboard and osd"
         onPressed: {
-            const visibilities = Visibilities.getForActive();
-            visibilities.session = !visibilities.session;
+            const v = Visibilities.getForActive();
+            v.launcher = v.dashboard = v.osd = v.utilities = !(v.launcher || v.dashboard || v.osd || v.utilities);
         }
     }
 
