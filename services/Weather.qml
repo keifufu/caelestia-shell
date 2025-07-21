@@ -15,7 +15,9 @@ Singleton {
     property string tempF: "0°F"
 
     function reload(): void {
-        if (Config.services.weatherLocation)
+        if (Quickshell.env("CAELESTIA_WEATHER_LOCATION"))
+            loc = Quickshell.env("CAELESTIA_WEATHER_LOCATION");
+        else if (Config.services.weatherLocation)
             loc = Config.services.weatherLocation;
         else if (!loc || timer.elapsed() > 900)
             Requests.get("https://ipinfo.io/json", text => {

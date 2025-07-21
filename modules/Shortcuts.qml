@@ -18,6 +18,15 @@ Scope {
     }
 
     CustomShortcut {
+        name: "session"
+        description: "Toggle seession menu"
+        onPressed: {
+            const visibilities = Visibilities.getForActive();
+            visibilities.session = !visibilities.session;
+        }
+    }
+
+    CustomShortcut {
         name: "launcher"
         description: "Toggle launcher"
         onPressed: root.launcherInterrupted = false
