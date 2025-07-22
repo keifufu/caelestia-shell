@@ -28,7 +28,8 @@ Scope {
     }
 
     function uptime(seconds: int) {
-      if (seconds < 90 && !loader.actuvactive) loader.activeAsync = true;
+      // Show lockscreen on system startup
+      // if (seconds < 90 && !loader.actuvactive) loader.activeAsync = true;
     }
 
     Process {
