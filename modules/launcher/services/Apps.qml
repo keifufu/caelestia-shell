@@ -13,7 +13,7 @@ Searcher {
     function launch(entry: DesktopEntry): void {
         if (entry.runInTerminal)
             Quickshell.execDetached({
-                command: ["uwsm app", "--", "foot", `${Quickshell.configDir}/assets/wrap_term_launch.sh`, ...entry.command],
+                command: ["uws", "app", "--", "foot", `${Quickshell.configDir}/assets/wrap_term_launch.sh`, ...entry.command],
                 workingDirectory: entry.workingDirectory
             });
         else
