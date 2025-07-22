@@ -18,7 +18,7 @@ Searcher {
             });
         else
             Quickshell.execDetached({
-                command: ["uwsm app", "--", ...entry.command],
+                command: ["uwsm", "app", "--", ...entry.command],
                 workingDirectory: entry.workingDirectory
             });
     }
