@@ -12,6 +12,7 @@ Item {
 
     property color colour: Colours.palette.m3secondary
 
+    readonly property Item recording: recording
     readonly property Item network: network
     readonly property real bs: bluetooth.y
     readonly property real be: repeater.count > 0 ? devices.y + devices.implicitHeight : bluetooth.y + bluetooth.implicitHeight
@@ -19,7 +20,25 @@ Item {
 
     clip: true
     implicitWidth: Math.max(network.implicitWidth, bluetooth.implicitWidth, devices.implicitWidth, battery.implicitWidth)
-    implicitHeight: network.implicitHeight + bluetooth.implicitHeight + bluetooth.anchors.topMargin + (repeater.count > 0 ? devices.implicitHeight + devices.anchors.topMargin : 0) + battery.implicitHeight + battery.anchors.topMargin
+    implicitHeight: recording.implicitHeight + network.implicitHeight + bluetooth.implicitHeight + bluetooth.anchors.topMargin + (repeater.count > 0 ? devices.implicitHeight + devices.anchors.topMargin : 0) + battery.implicitHeight + battery.anchors.topMargin
+
+    MaterialIcon {
+      id: recording
+
+      animate: true
+      text: Recording.active ? "screen_record" : "circle"
+      color: root.colour
+
+      anchors.horizontalCenter: parent.horizontalCenter
+
+      StateLayer {
+        radius: 100
+
+        function onClicked(): void {
+          Recording.toggle();
+        }
+      }
+    }
 
     MaterialIcon {
         id: network
@@ -28,7 +47,9 @@ Item {
         text: Network.active ? Icons.getNetworkIcon(Network.active.strength ?? 0) : "wifi_off"
         color: root.colour
 
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: recording.horizontalCenter
+        anchors.top: recording.bottom
+        anchors.topMargin: Appearance.spacing.smaller / 2
     }
 
     MaterialIcon {
