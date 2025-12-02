@@ -56,40 +56,40 @@ Item {
         implicitWidth: Math.max(icon.implicitWidth, current.implicitHeight)
         implicitHeight: icon.implicitHeight + current.implicitWidth + current.anchors.topMargin
 
-        MaterialIcon {
-            id: icon
+        // MaterialIcon {
+        //     id: icon
 
-            animate: true
-            text: Icons.getAppCategoryIcon(Hyprland.activeToplevel?.lastIpcObject.class, "desktop_windows")
-            color: root.colour
+        //     animate: true
+        //     text: Icons.getAppCategoryIcon(Hyprland.activeToplevel?.lastIpcObject.class, "desktop_windows")
+        //     color: root.colour
 
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
+        //     anchors.horizontalCenter: parent.horizontalCenter
+        // }
 
-        Title {
-            id: text1
-        }
+        // Title {
+        //     id: text1
+        // }
 
-        Title {
-            id: text2
-        }
+        // Title {
+        //     id: text2
+        // }
 
-        TextMetrics {
-            id: metrics
+        // TextMetrics {
+        //     id: metrics
 
-            text: Hyprland.activeToplevel?.title ?? qsTr("Desktop")
-            font.pointSize: Appearance.font.size.smaller
-            font.family: Appearance.font.family.mono
-            elide: Qt.ElideRight
-            elideWidth: root.height - icon.height
+        //     text: Hyprland.activeToplevel?.title ?? qsTr("Desktop")
+        //     font.pointSize: Appearance.font.size.smaller
+        //     font.family: Appearance.font.family.mono
+        //     elide: Qt.ElideRight
+        //     elideWidth: root.height - icon.height
 
-            onTextChanged: {
-                const next = child.current === text1 ? text2 : text1;
-                next.text = elidedText;
-                child.current = next;
-            }
-            onElideWidthChanged: child.current.text = elidedText
-        }
+        //     onTextChanged: {
+        //         const next = child.current === text1 ? text2 : text1;
+        //         next.text = elidedText;
+        //         child.current = next;
+        //     }
+        //     onElideWidthChanged: child.current.text = elidedText
+        // }
 
         Behavior on implicitWidth {
             NumberAnimation {
