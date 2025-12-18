@@ -104,7 +104,7 @@ MouseArea {
               output_dir="/tmp"
             fi
 
-            filename="$(date '+%Y-%m-%dT%H:%M:%S').png"
+            filename="$(date '+%Y-%m-%dT%H-%M-%S').png"
             output_path="$output_dir/$filename"
 
             grim -l 0 -g '${screen.x + Math.ceil(rsx)},${screen.y + Math.ceil(rsy)} ${Math.floor(sw)}x${Math.floor(sh)}' - \
